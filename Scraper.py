@@ -3,6 +3,11 @@ import pandas as pd
 import requests
 import time
 import pymongo as mongo
+import redis
+
+r = redis.Redis(host='localhost',port=6379, db=0)
+
+r.delete("Scrapes")
 
 client = mongo.MongoClient("mongodb://127.0.0.1:27017")
 bitcoin_db = client["bitcoins"]
@@ -45,16 +50,28 @@ def scrape():
 
         d = {'Hash': hashes, 'Time': times, 'Amount (BTC)': btc, 'Amount (USD)':usd}
         df = pd.DataFrame(data=d)
+        #json = df.to_json()
+        
 
-        maxvalue = df['Amount (USD)'].idxmax()
-        df1 = df.loc[[maxvalue]]
-        max_hash = df1["Hash"].item()
-        max_time = df1["Time"].item()
-        max_btc = df1["Amount (BTC)"].item()
-        max_usd = df1["Amount (USD)"].item()
+        json_records = df.to_json(orient ='records') 
+        
+        r.rpush('Scrapes', json_records)
+        print("done")
 
-        data = { "Hash": max_hash, "Time": max_time, "Amount (BTC)": max_btc, "Amount (USD)": max_usd}
-        col_high.insert_one(data)
+        #r.setex('data',60, json_records)
+        #print("json_records = ", json_records, "\n") 
+
+        #maxvalue = df['Amount (USD)'].idxmax()
+        #df1 = df.loc[[maxvalue]]
+
+
+        #max_hash = df1["Hash"].item()
+        #max_time = df1["Time"].item()
+        #max_btc = df1["Amount (BTC)"].item()
+        #max_usd = df1["Amount (USD)"].item()
+
+        #data = { "Hash": max_hash, "Time": max_time, "Amount (BTC)": max_btc, "Amount (USD)": max_usd}
+        #col_high.insert_one(data)
         time.sleep(60)
 
 scrape()

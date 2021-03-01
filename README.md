@@ -33,4 +33,8 @@ chmod +x scraper.py
 ### Stap 7 Run het script
 python3 Scraper.py
 
+### stap X
+
+pip3 install redis
+
 
