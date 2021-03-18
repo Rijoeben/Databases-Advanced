@@ -5,7 +5,7 @@ import time
 import pymongo as mongo
 import redis
 
-r = redis.Redis(host='127.0.0.1',port=6379, db=0)
+r = redis.Redis(host='container2',port=6379, db=0)
 
 r.delete("Scrapes")
 
