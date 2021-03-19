@@ -5,9 +5,10 @@ import time
 import pymongo as mongo
 import redis
 
-r = redis.Redis(host='mystifying_hermann',port=6379, db=0)
+r = redis.Redis(host='container2',port=6379, db=0)
+#r = redis.Redis(host='localhost',port=6379, db=0)
 
-r.delete("Scrapes")
+#r.delete("Scrapes")
 
 def scrape():
 
