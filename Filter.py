@@ -7,11 +7,11 @@ import redis
 import json
 
 #Mijn filter gaat ervanuit dat hij wordt gestart wanneer het scrapen stopt. Zodat ik dus alle data uit 1 scrape sessie kan behandelen en doorsturen naar de mongodb
-client = mongo.MongoClient("mongodb://127.0.0.1:27017")
+client = mongo.MongoClient("mongodb://container4:27017")
 bitcoin_db = client["bitcoins"]
 col_high = bitcoin_db["Highest"]
 
-r = redis.Redis(host='localhost',port=6379, db=0)
+r = redis.Redis(host='container2',port=6379, db=0)
 
 
 
