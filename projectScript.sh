@@ -9,5 +9,12 @@ sudo docker network connect mynetwork container2
 sudo docker network connect mynetwork container4
 sudo docker run --name container1 rijoeben/scraper
 sudo docker network connect mynetwork container1
+sudo docker start container1
 sudo docker run --name container3 rijoeben/filter
 sudo docker network connect mynetwork container3
+sudo docker start container3
+
+sudo docker start container2
+sudo docker start container4
+sudo docker start container1
+sudo docker start container3
